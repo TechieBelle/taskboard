@@ -35,11 +35,15 @@ function Toast({ toast }: { toast: Toast }) {
   const getIcon = () => {
     switch (toast.type) {
       case "success":
-        return <CheckCircle size={20} className="text-green-600 flex-shrink-0" />;
+        return (
+          <CheckCircle size={20} className="text-green-600 flex-shrink-0" />
+        );
       case "error":
         return <AlertCircle size={20} className="text-red-600 flex-shrink-0" />;
       case "warning":
-        return <AlertTriangle size={20} className="text-yellow-600 flex-shrink-0" />;
+        return (
+          <AlertTriangle size={20} className="text-yellow-600 flex-shrink-0" />
+        );
       case "info":
         return <Info size={20} className="text-blue-600 flex-shrink-0" />;
     }

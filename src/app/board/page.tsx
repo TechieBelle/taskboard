@@ -66,22 +66,22 @@ export default function BoardPage() {
   const handleLogout = () => {
     try {
       logout();
-      toastManager.info('Logged out successfully');
+      toastManager.info("Logged out successfully");
       router.push("/login");
     } catch (error) {
-      console.error('Error during logout:', error);
-      toastManager.error('Error logging out. Please try again.');
+      console.error("Error during logout:", error);
+      toastManager.error("Error logging out. Please try again.");
     }
   };
 
   const handleResetBoard = () => {
     try {
       resetBoard();
-      toastManager.success('Board has been reset. All tasks cleared.');
+      toastManager.success("Board has been reset. All tasks cleared.");
       setResetConfirmOpen(false);
     } catch (error) {
-      console.error('Error resetting board:', error);
-      toastManager.error('Failed to reset board. Please try again.');
+      console.error("Error resetting board:", error);
+      toastManager.error("Failed to reset board. Please try again.");
     }
   };
 
@@ -103,8 +103,8 @@ export default function BoardPage() {
     try {
       moveTask(taskId, newColumn);
     } catch (error) {
-      console.error('Error moving task:', error);
-      toastManager.error('Failed to move task. Please try again.');
+      console.error("Error moving task:", error);
+      toastManager.error("Failed to move task. Please try again.");
     }
     setActiveTask(null);
   };
@@ -115,8 +115,8 @@ export default function BoardPage() {
     try {
       addTask(taskData);
     } catch (error) {
-      console.error('Error creating task:', error);
-      toastManager.error('Failed to create task. Please try again.');
+      console.error("Error creating task:", error);
+      toastManager.error("Failed to create task. Please try again.");
     }
   };
 
@@ -131,8 +131,8 @@ export default function BoardPage() {
         updateTask(editingTask.id, taskData);
         setEditingTask(null);
       } catch (error) {
-        console.error('Error updating task:', error);
-        toastManager.error('Failed to update task. Please try again.');
+        console.error("Error updating task:", error);
+        toastManager.error("Failed to update task. Please try again.");
       }
     }
   };
@@ -150,11 +150,13 @@ export default function BoardPage() {
     if (taskToDelete) {
       try {
         deleteTask(taskToDelete.id);
-        toastManager.success(`Task "${taskToDelete.title}" deleted successfully`);
+        toastManager.success(
+          `Task "${taskToDelete.title}" deleted successfully`,
+        );
         setTaskToDelete(null);
       } catch (error) {
-        console.error('Error deleting task:', error);
-        toastManager.error('Failed to delete task. Please try again.');
+        console.error("Error deleting task:", error);
+        toastManager.error("Failed to delete task. Please try again.");
       }
     }
   };
@@ -194,7 +196,9 @@ export default function BoardPage() {
                 H
               </span>
             </div>
-            <h1 className="text-base sm:text-xl font-bold text-gray-900 truncate">Task Board</h1>
+            <h1 className="text-base sm:text-xl font-bold text-gray-900 truncate">
+              Task Board
+            </h1>
           </div>
 
           {/* Actions */}
@@ -258,7 +262,9 @@ export default function BoardPage() {
                   <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Plus size={32} className="text-gray-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No tasks yet</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    No tasks yet
+                  </h3>
                   <p className="text-gray-600 text-sm mb-6 max-w-xs">
                     Create your first task to get started
                   </p>

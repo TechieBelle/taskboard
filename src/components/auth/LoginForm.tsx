@@ -184,7 +184,9 @@ export default function LoginForm() {
 
               {/* Demo creds */}
               <div className="mt-6 sm:mt-8 text-center">
-                <p className="text-xs sm:text-sm text-gray-500">Demo credentials</p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  Demo credentials
+                </p>
                 <p className="font-mono bg-gray-100 px-2 sm:px-3 py-2 sm:py-2.5 rounded mt-2 text-xs sm:text-sm overflow-auto">
                   intern@demo.com / intern123
                 </p>

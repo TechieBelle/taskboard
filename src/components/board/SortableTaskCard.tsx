@@ -29,7 +29,7 @@ export default function SortableTaskCard({
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.4 : 1,
-    filter: isDragging ? 'blur(1px) grayscale(20%)' : 'blur(0px) grayscale(0%)',
+    filter: isDragging ? "blur(1px) grayscale(20%)" : "blur(0px) grayscale(0%)",
   };
 
   return (

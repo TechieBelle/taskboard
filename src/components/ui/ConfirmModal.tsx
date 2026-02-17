@@ -40,7 +40,9 @@ export default function ConfirmModal({
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         {/* Header */}
         <div className="flex justify-between items-center p-4 sm:p-6 border-b">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900">{title}</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">
+            {title}
+          </h2>
           <button
             onClick={onClose}
             type="button"
@@ -53,7 +55,9 @@ export default function ConfirmModal({
 
         {/* Message */}
         <div className="p-4 sm:p-6">
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed line-clamp-5">{message}</p>
+          <p className="text-sm sm:text-base text-gray-700 leading-relaxed line-clamp-5">
+            {message}
+          </p>
         </div>
 
         {/* Buttons */}

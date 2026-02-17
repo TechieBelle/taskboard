@@ -31,7 +31,9 @@ export default function BoardColumn({
       <div className="bg-gray-100 rounded-lg p-3 sm:p-4">
         {/* Column Header */}
         <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <h2 className="font-bold text-gray-900 text-base sm:text-lg">{title}</h2>
+          <h2 className="font-bold text-gray-900 text-base sm:text-lg">
+            {title}
+          </h2>
           <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs sm:text-sm font-medium">
             {tasks.length}
           </span>

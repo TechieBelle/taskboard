@@ -62,7 +62,15 @@ export default function TaskFormModal({
       setErrors({});
       setTouched({});
     }
-  }, [isOpen, initialTitle, initialDescription, initialPriority, initialDueDate, initialTags, initialColumn]);
+  }, [
+    isOpen,
+    initialTitle,
+    initialDescription,
+    initialPriority,
+    initialDueDate,
+    initialTags,
+    initialColumn,
+  ]);
 
   const handleFieldBlur = (fieldName: string, value: string) => {
     setTouched((prev) => ({ ...prev, [fieldName]: true }));
@@ -117,7 +125,13 @@ export default function TaskFormModal({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const validationErrors = validateAllFields(title, description, dueDate, tags, editTask?.dueDate);
+    const validationErrors = validateAllFields(
+      title,
+      description,
+      dueDate,
+      tags,
+      editTask?.dueDate,
+    );
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -127,7 +141,7 @@ export default function TaskFormModal({
         dueDate: true,
         tags: true,
       });
-      toastManager.error('Please fix the errors in the form');
+      toastManager.error("Please fix the errors in the form");
       return;
     }
 
@@ -147,18 +161,18 @@ export default function TaskFormModal({
       };
 
       onSubmit(taskData);
-      
+
       // Show success toast
       if (editTask) {
         toastManager.success(`Task "${taskData.title}" updated successfully!`);
       } else {
         toastManager.success(`Task "${taskData.title}" created successfully!`);
       }
-      
+
       onClose();
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toastManager.error('Failed to save task. Please try again.');
+      console.error("Error submitting form:", error);
+      toastManager.error("Failed to save task. Please try again.");
     }
   };
 
@@ -182,7 +196,10 @@ export default function TaskFormModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto flex-1">
+        <form
+          onSubmit={handleSubmit}
+          className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto flex-1"
+        >
           {/* Title */}
           <div>
             <div className="flex justify-between items-center mb-1.5 sm:mb-2">
@@ -192,7 +209,9 @@ export default function TaskFormModal({
               >
                 Title <span className="text-red-500">*</span>
               </label>
-              {touched.title && !errors.title && <CheckCircle size={16} className="text-green-600" />}
+              {touched.title && !errors.title && (
+                <CheckCircle size={16} className="text-green-600" />
+              )}
             </div>
             <input
               id="title"
@@ -225,7 +244,9 @@ export default function TaskFormModal({
               >
                 Description
               </label>
-              {touched.description && !errors.description && <CheckCircle size={16} className="text-green-600" />}
+              {touched.description && !errors.description && (
+                <CheckCircle size={16} className="text-green-600" />
+              )}
             </div>
             <textarea
               id="description"
@@ -278,7 +299,9 @@ export default function TaskFormModal({
               >
                 Due Date
               </label>
-              {touched.dueDate && !errors.dueDate && <CheckCircle size={16} className="text-green-600" />}
+              {touched.dueDate && !errors.dueDate && (
+                <CheckCircle size={16} className="text-green-600" />
+              )}
             </div>
             <input
               id="dueDate"
@@ -309,7 +332,9 @@ export default function TaskFormModal({
               >
                 Tags
               </label>
-              {touched.tags && !errors.tags && <CheckCircle size={16} className="text-green-600" />}
+              {touched.tags && !errors.tags && (
+                <CheckCircle size={16} className="text-green-600" />
+              )}
             </div>
             <input
               id="tags"
@@ -330,7 +355,9 @@ export default function TaskFormModal({
                 <span className="text-xs">{errors.tags}</span>
               </div>
             )}
-            <p className="text-xs text-gray-500 mt-1">Separate tags with commas</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Separate tags with commas
+            </p>
           </div>
 
           {/* Column */}

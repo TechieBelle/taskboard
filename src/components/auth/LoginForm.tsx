@@ -39,37 +39,51 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-8">
       <div className="w-full max-w-7xl">
-        <div className="grid lg:grid-cols-[1fr_550px] gap-8 items-center">
-          {/* Left Column - Logo + Image */}
-          <div className="flex flex-col items-start space-y-4">
+        {/* Stack on mobile/tablet, 2 columns on large screens */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_550px] gap-10 items-center">
+          {/* Left Column */}
+          <div className="flex flex-col items-start space-y-6">
             {/* Logo */}
-            <div className="bg-black w-16 h-16  flex items-center justify-center">
-              <h1 className="text-sm font-bold text-white tracking-wider">
+            <div className="bg-black w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
+              <h1 className="text-xs md:text-sm font-bold text-white tracking-wider">
                 HINTRO
               </h1>
             </div>
 
-            {/* Image - Hidden on Mobile */}
+            {/* Image: hidden on sm and below, visible from md+ */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="task-board/public/images/design_inspo_purple_to_black_keep_logo.png"
+              src="/images/login-image.png"
               alt="Task Board Illustration"
-              className="hidden lg:block w-full h-auto max-h-[400px] object-contain"
+              className="
+                hidden md:block
+                w-full
+                max-w-xl
+                lg:max-w-none
+                h-auto
+                max-h-[320px]
+                lg:max-h-[420px]
+                object-cover
+                select-none
+              "
+              loading="eager"
             />
           </div>
 
-          {/* Right Column - Heading, Subtitle & Login Form */}
+          {/* Right Column */}
           <div className="w-full">
             {/* Heading & Subheading */}
-            <div className="mb-8">
-              <h2 className="text-4xl font-bold text-gray-900">LOGIN</h2>
+            <div className="mb-6 md:mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                LOGIN
+              </h2>
               <p className="text-gray-600 mt-3">
                 Please fill your detail to access your account.
               </p>
             </div>
 
-            {/* Login Form Card */}
-            <div className="bg-white rounded-2xl shadow-2xl p-10">
+            {/* Form Card */}
+            <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-10">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Email */}
                 <div>
@@ -118,19 +132,22 @@ export default function LoginForm() {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => setShowPassword((s) => !s)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                   </div>
                 </div>
 
-                {/* Error Message */}
+                {/* Error */}
                 {error && <div className="text-red-600 text-sm">{error}</div>}
 
-                {/* Remember Me & Forgot Password */}
-                <div className="flex items-center justify-between">
+                {/* Remember + Forgot */}
+                <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center">
                     <input
                       id="remember"
@@ -149,13 +166,13 @@ export default function LoginForm() {
                   </div>
                   <button
                     type="button"
-                    className="text-sm text-gray-600 hover:text-black transition"
+                    className="text-sm text-gray-600 hover:text-black transition whitespace-nowrap"
                   >
                     Forgot Password?
                   </button>
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit */}
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -165,7 +182,7 @@ export default function LoginForm() {
                 </button>
               </form>
 
-              {/* Demo Credentials */}
+              {/* Demo creds */}
               <div className="mt-8 text-center">
                 <p className="text-sm text-gray-500">Demo credentials</p>
                 <p className="font-mono bg-gray-100 px-3 py-2.5 rounded mt-2 text-sm">

@@ -46,7 +46,6 @@ export default function ActivityLog() {
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header */}
       <div className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 border-b border-gray-200">
         <Clock size={16} className="text-gray-500 flex-shrink-0" />
         <h3 className="font-semibold text-gray-900 text-sm">Activity Log</h3>
@@ -57,7 +56,6 @@ export default function ActivityLog() {
         )}
       </div>
 
-      {/* Log Items */}
       <div className="max-h-[400px] overflow-y-auto">
         {activityLog.length === 0 ? (
           <div className="px-3 sm:px-4 py-6 sm:py-8 text-center text-gray-400 text-xs sm:text-sm">
@@ -68,7 +66,6 @@ export default function ActivityLog() {
             {activityLog.map((log) => {
               const config = actionConfig[log.action];
 
-              // For moved action, show detailed movement details
               const isMoved = log.action === "moved";
 
               return (
@@ -90,7 +87,6 @@ export default function ActivityLog() {
                         </span>
                       </p>
 
-                      {/* Movement details with visual indicators */}
                       {isMoved && log.fromColumn && log.toColumn ? (
                         <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
                           <span className="px-1.5 py-0.5 bg-gray-100 rounded text-gray-700 font-medium">

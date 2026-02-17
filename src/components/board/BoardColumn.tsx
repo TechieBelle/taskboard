@@ -29,7 +29,6 @@ export default function BoardColumn({
   return (
     <div className="w-full lg:flex-1 lg:min-w-[250px] sm:min-w-[280px] md:min-w-[320px]">
       <div className="bg-gray-100 rounded-lg p-3 sm:p-4">
-        {/* Column Header */}
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <h2 className="font-bold text-gray-900 text-base sm:text-lg">
             {title}
@@ -39,7 +38,6 @@ export default function BoardColumn({
           </span>
         </div>
 
-        {/* Drop Zone */}
         <div
           ref={setNodeRef}
           className={`space-y-2 sm:space-y-3 min-h-[200px] p-2 rounded-lg transition-colors ${

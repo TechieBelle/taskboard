@@ -48,7 +48,7 @@ export default function TaskFormModal({
   const [dueDate, setDueDate] = useState(initialDueDate);
   const [tags, setTags] = useState(initialTags);
   const [column, setColumn] = useState(initialColumn);
-  const [errors, setErrors] = useState<ValidationErrorsType>({});
+  const [errors, setErrors] = useState<ValidationErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -78,9 +78,9 @@ export default function TaskFormModal({
     setErrors((prev) => {
       const updated = { ...prev };
       if (error) {
-        updated[fieldName as keyof ValidationErrorsType] = error;
+        updated[fieldName as keyof ValidationErrors] = error;
       } else {
-        delete updated[fieldName as keyof ValidationErrorsType];
+        delete updated[fieldName as keyof ValidationErrors];
       }
       return updated;
     });
@@ -104,7 +104,7 @@ export default function TaskFormModal({
         setTags(value);
         break;
       case "column":
-        setColumn(value);
+        setColumn(value as Column);
         break;
     }
 
@@ -113,9 +113,9 @@ export default function TaskFormModal({
       setErrors((prev) => {
         const updated = { ...prev };
         if (error) {
-          updated[fieldName as keyof ValidationErrorsType] = error;
+          updated[fieldName as keyof ValidationErrors] = error;
         } else {
-          delete updated[fieldName as keyof ValidationErrorsType];
+          delete updated[fieldName as keyof ValidationErrors];
         }
         return updated;
       });
@@ -162,7 +162,6 @@ export default function TaskFormModal({
 
       onSubmit(taskData);
 
-      // Show success toast
       if (editTask) {
         toastManager.success(`Task "${taskData.title}" updated successfully!`);
       } else {
@@ -171,7 +170,6 @@ export default function TaskFormModal({
 
       onClose();
     } catch (error) {
-      console.error("Error submitting form:", error);
       toastManager.error("Failed to save task. Please try again.");
     }
   };
@@ -181,7 +179,6 @@ export default function TaskFormModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto flex flex-col">
-        {/* Header */}
         <div className="flex justify-between items-center p-4 sm:p-6 border-b flex-shrink-0">
           <h2 className="text-lg sm:text-xl font-bold text-gray-900">
             {editTask ? "Edit Task" : "Create New Task"}
@@ -200,7 +197,6 @@ export default function TaskFormModal({
           onSubmit={handleSubmit}
           className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto flex-1"
         >
-          {/* Title */}
           <div>
             <div className="flex justify-between items-center mb-1.5 sm:mb-2">
               <label
@@ -235,7 +231,6 @@ export default function TaskFormModal({
             )}
           </div>
 
-          {/* Description */}
           <div>
             <div className="flex justify-between items-center mb-1.5 sm:mb-2">
               <label
@@ -269,7 +264,6 @@ export default function TaskFormModal({
             )}
           </div>
 
-          {/* Priority */}
           <div>
             <label
               htmlFor="priority"
@@ -290,7 +284,6 @@ export default function TaskFormModal({
             </select>
           </div>
 
-          {/* Due Date */}
           <div>
             <div className="flex justify-between items-center mb-1.5 sm:mb-2">
               <label
@@ -323,7 +316,6 @@ export default function TaskFormModal({
             )}
           </div>
 
-          {/* Tags */}
           <div>
             <div className="flex justify-between items-center mb-1.5 sm:mb-2">
               <label
@@ -360,7 +352,6 @@ export default function TaskFormModal({
             </p>
           </div>
 
-          {/* Column */}
           <div>
             <label
               htmlFor="column"
@@ -380,7 +371,6 @@ export default function TaskFormModal({
             </select>
           </div>
 
-          {/* Buttons */}
           <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-4">
             <button
               type="button"

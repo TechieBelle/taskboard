@@ -8,7 +8,6 @@ export default function ToastContainer() {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   useEffect(() => {
-    // Subscribe to toast changes
     const unsubscribe = toastManager.subscribe(setToasts);
     return unsubscribe;
   }, []);

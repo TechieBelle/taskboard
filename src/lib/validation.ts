@@ -1,5 +1,3 @@
-// Task form validation utilities
-
 export interface ValidationErrors {
   title?: string;
   description?: string;
@@ -28,7 +26,6 @@ export const validateTaskField = (
         const selectedDate = new Date(value);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        // Only validate past dates for new tasks
         if (selectedDate < today && !editTaskDueDate) {
           return "Due date cannot be in the past";
         }

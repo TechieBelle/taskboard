@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { Task, ActivityLog, Column, Priority } from '@/types';
 import { storage } from './storage';
 
-// Column display name mapping
 const COLUMN_NAMES: Record<Column, string> = {
   todo: 'Todo',
   doing: 'In Progress',
@@ -12,7 +11,6 @@ const COLUMN_NAMES: Record<Column, string> = {
 const getColumnDisplayName = (column: Column): string => COLUMN_NAMES[column];
 
 interface TaskStore {
-  // State
   tasks: Task[];
   activityLog: ActivityLog[];
   isAuthenticated: boolean;
@@ -20,27 +18,21 @@ interface TaskStore {
   searchQuery: string;
   priorityFilter: Priority | 'all';
 
-  // Actions
   initializeStore: () => void;
 
-  // Auth
   login: (email: string, password: string, rememberMe: boolean) => boolean;
   logout: () => void;
 
-  // Tasks
   addTask: (task: Omit<Task, 'id' | 'createdAt'>) => void;
   updateTask: (id: string, updates: Partial<Task>) => void;
   deleteTask: (id: string) => void;
   moveTask: (id: string, newColumn: Column) => void;
 
-  // Filters
   setSearchQuery: (query: string) => void;
   setPriorityFilter: (priority: Priority | 'all') => void;
 
-  // Utility
   resetBoard: () => void;
 
-  // Computed
   getFilteredTasks: () => Task[];
 }
 
@@ -54,7 +46,6 @@ export const useStore = create<TaskStore>((set, get) => ({
 
   initializeStore: () => {
     if (get().isInitialized) {
-      console.log('⚠️ Already initialized, skipping');
       return;
     }
 
@@ -63,17 +54,10 @@ export const useStore = create<TaskStore>((set, get) => ({
     const auth = storage.getAuth();
     const rememberMe = storage.getRememberMe();
 
-    console.log('🔍 initializeStore running');
-    console.log('   rememberMe:', rememberMe);
-    console.log('   auth:', auth);
-    console.log('   current isAuthenticated:', get().isAuthenticated);
-
     const currentlyAuthenticated = get().isAuthenticated;
     const restoredAuthenticated =
       rememberMe === true && auth?.isAuthenticated === true;
     const finalAuthenticated = currentlyAuthenticated || restoredAuthenticated;
-
-    console.log('   Setting isAuthenticated to:', finalAuthenticated);
 
     set({
       tasks,
@@ -84,17 +68,13 @@ export const useStore = create<TaskStore>((set, get) => ({
   },
 
   login: (email: string, password: string, rememberMe: boolean) => {
-    console.log('🔐 Login called, rememberMe:', rememberMe);
-
     if (email === 'intern@demo.com' && password === 'intern123') {
       storage.saveAuth(true);
       storage.saveRememberMe(rememberMe);
       set({ isAuthenticated: true });
-      console.log('✅ Login success');
       return true;
     }
 
-    console.log('❌ Login failed');
     return false;
   },
 

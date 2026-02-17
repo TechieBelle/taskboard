@@ -39,19 +39,14 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-8">
       <div className="w-full max-w-7xl">
-        {/* Stack on mobile/tablet, 2 columns on large screens */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_550px] gap-10 items-center">
-          {/* Left Column */}
           <div className="flex flex-col items-start space-y-6">
-            {/* Logo */}
             <div className="bg-black w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
               <h1 className="text-xs md:text-sm font-bold text-white tracking-wider">
                 HINTRO
               </h1>
             </div>
 
-            {/* Image: hidden on sm and below, visible from md+ */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/login-image.png"
               alt="Task Board Illustration"
@@ -70,9 +65,7 @@ export default function LoginForm() {
             />
           </div>
 
-          {/* Right Column */}
           <div className="w-full">
-            {/* Heading & Subheading */}
             <div className="mb-6 md:mb-8">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
                 LOGIN
@@ -82,10 +75,8 @@ export default function LoginForm() {
               </p>
             </div>
 
-            {/* Form Card */}
             <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-10">
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                {/* Email */}
                 <div>
                   <label
                     htmlFor="email"
@@ -108,7 +99,6 @@ export default function LoginForm() {
                   />
                 </div>
 
-                {/* Password */}
                 <div>
                   <label
                     htmlFor="password"
@@ -143,10 +133,8 @@ export default function LoginForm() {
                   </div>
                 </div>
 
-                {/* Error */}
                 {error && <div className="text-red-600 text-sm">{error}</div>}
 
-                {/* Remember + Forgot */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
                   <div className="flex items-center">
                     <input
@@ -172,7 +160,6 @@ export default function LoginForm() {
                   </button>
                 </div>
 
-                {/* Submit */}
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -182,7 +169,6 @@ export default function LoginForm() {
                 </button>
               </form>
 
-              {/* Demo creds */}
               <div className="mt-6 sm:mt-8 text-center">
                 <p className="text-xs sm:text-sm text-gray-500">
                   Demo credentials

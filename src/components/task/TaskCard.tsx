@@ -37,7 +37,6 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
         isOverdue ? "border-red-300 bg-red-50" : "border-gray-200"
       }`}
     >
-      {/* Title + Buttons */}
       <div className="flex justify-between items-start gap-2 mb-2">
         <h3 className="font-semibold text-gray-900 flex-1 text-sm sm:text-base leading-snug">
           {task.title}
@@ -67,19 +66,16 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
         </div>
       </div>
 
-      {/* Description */}
       {task.description && (
         <p className="text-xs sm:text-sm text-gray-600 mb-2 line-clamp-2">
           {task.description}
         </p>
       )}
 
-      {/* Created At */}
       <p className="text-xs text-gray-400 mb-2">
         Created: {new Date(task.createdAt).toLocaleDateString()}
       </p>
 
-      {/* Priority, Due Date, Tags */}
       <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center text-xs sm:text-sm">
         {task.priority && (
           <span

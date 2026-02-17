@@ -11,7 +11,6 @@ export default function BoardToolbar() {
 
   return (
     <div className="flex flex-col gap-2 sm:gap-3 mb-4 sm:mb-6">
-      {/* Search */}
       <div className="relative flex-1">
         <Search
           size={16}
@@ -26,9 +25,7 @@ export default function BoardToolbar() {
         />
       </div>
 
-      {/* Filter Row */}
       <div className="flex flex-col xs:flex-row gap-2 items-stretch xs:items-center">
-        {/* Priority Filter */}
         <div className="relative flex-1 xs:flex-auto">
           <Filter
             size={16}
@@ -50,7 +47,6 @@ export default function BoardToolbar() {
           </select>
         </div>
 
-        {/* Clear Filters */}
         {(searchQuery || priorityFilter !== "all") && (
           <button
             onClick={() => {

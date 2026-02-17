@@ -53,7 +53,6 @@ export default function BoardPage() {
 
   useEffect(() => {
     initializeStore();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -69,7 +68,6 @@ export default function BoardPage() {
       toastManager.info("Logged out successfully");
       router.push("/login");
     } catch (error) {
-      console.error("Error during logout:", error);
       toastManager.error("Error logging out. Please try again.");
     }
   };
@@ -80,7 +78,6 @@ export default function BoardPage() {
       toastManager.success("Board has been reset. All tasks cleared.");
       setResetConfirmOpen(false);
     } catch (error) {
-      console.error("Error resetting board:", error);
       toastManager.error("Failed to reset board. Please try again.");
     }
   };
@@ -103,7 +100,6 @@ export default function BoardPage() {
     try {
       moveTask(taskId, newColumn);
     } catch (error) {
-      console.error("Error moving task:", error);
       toastManager.error("Failed to move task. Please try again.");
     }
     setActiveTask(null);
@@ -115,7 +111,6 @@ export default function BoardPage() {
     try {
       addTask(taskData);
     } catch (error) {
-      console.error("Error creating task:", error);
       toastManager.error("Failed to create task. Please try again.");
     }
   };
@@ -131,7 +126,6 @@ export default function BoardPage() {
         updateTask(editingTask.id, taskData);
         setEditingTask(null);
       } catch (error) {
-        console.error("Error updating task:", error);
         toastManager.error("Failed to update task. Please try again.");
       }
     }
@@ -155,7 +149,6 @@ export default function BoardPage() {
         );
         setTaskToDelete(null);
       } catch (error) {
-        console.error("Error deleting task:", error);
         toastManager.error("Failed to delete task. Please try again.");
       }
     }
@@ -186,10 +179,8 @@ export default function BoardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex justify-between items-center gap-2 sm:gap-4">
-          {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <div className="bg-black w-8 sm:w-9 h-8 sm:h-9 flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold tracking-wider">
@@ -201,7 +192,6 @@ export default function BoardPage() {
             </h1>
           </div>
 
-          {/* Actions */}
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 overflow-x-auto">
             <button
               onClick={() => setShowActivityLog(!showActivityLog)}
@@ -243,18 +233,14 @@ export default function BoardPage() {
         </div>
       </nav>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
-        {/* Search & Filter Toolbar */}
         <BoardToolbar />
 
-        {/* Board + Activity Log */}
         <div
           className={`flex flex-col lg:flex-row gap-4 lg:gap-6 ${
             showActivityLog ? "lg:flex-row" : ""
           }`}
         >
-          {/* Board Columns */}
           <div className="flex-1 min-w-0">
             {allTasks.length === 0 ? (
               <div className="flex items-center justify-center min-h-[450px] bg-white rounded-lg border-2 border-dashed border-gray-300">
@@ -322,7 +308,6 @@ export default function BoardPage() {
             )}
           </div>
 
-          {/* Activity Log Panel */}
           {showActivityLog && (
             <div className="hidden lg:block w-full lg:w-80 flex-shrink-0">
               <ActivityLog />
@@ -331,7 +316,6 @@ export default function BoardPage() {
         </div>
       </main>
 
-      {/* Task Form Modal */}
       <TaskFormModal
         isOpen={isFormOpen}
         onClose={handleCloseForm}
@@ -339,7 +323,6 @@ export default function BoardPage() {
         editTask={editingTask}
       />
 
-      {/* Delete Confirmation */}
       <ConfirmModal
         isOpen={deleteConfirmOpen}
         onClose={() => {
@@ -354,7 +337,6 @@ export default function BoardPage() {
         variant="danger"
       />
 
-      {/* Reset Board Confirmation */}
       <ConfirmModal
         isOpen={resetConfirmOpen}
         onClose={() => setResetConfirmOpen(false)}

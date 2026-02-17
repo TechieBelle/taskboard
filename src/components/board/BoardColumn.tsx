@@ -27,12 +27,12 @@ export default function BoardColumn({
   const taskIds = tasks.map((task) => task.id);
 
   return (
-    <div className="flex-1 min-w-[300px]">
-      <div className="bg-gray-100 rounded-lg p-4">
+    <div className="w-full lg:flex-1 lg:min-w-[250px] sm:min-w-[280px] md:min-w-[320px]">
+      <div className="bg-gray-100 rounded-lg p-3 sm:p-4">
         {/* Column Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-bold text-gray-900 text-lg">{title}</h2>
-          <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm font-medium">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h2 className="font-bold text-gray-900 text-base sm:text-lg">{title}</h2>
+          <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs sm:text-sm font-medium">
             {tasks.length}
           </span>
         </div>
@@ -40,7 +40,7 @@ export default function BoardColumn({
         {/* Drop Zone */}
         <div
           ref={setNodeRef}
-          className={`space-y-3 min-h-[200px] p-2 rounded-lg transition-colors ${
+          className={`space-y-2 sm:space-y-3 min-h-[200px] p-2 rounded-lg transition-colors ${
             isOver ? "bg-blue-50 border-2 border-blue-300 border-dashed" : ""
           }`}
         >
@@ -59,7 +59,7 @@ export default function BoardColumn({
           </SortableContext>
 
           {tasks.length === 0 && (
-            <div className="text-center text-gray-400 text-sm py-8">
+            <div className="text-center text-gray-400 text-xs sm:text-sm py-8">
               Drop tasks here
             </div>
           )}

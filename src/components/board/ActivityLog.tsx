@@ -47,8 +47,8 @@ export default function ActivityLog() {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-200">
-        <Clock size={16} className="text-gray-500" />
+      <div className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 border-b border-gray-200">
+        <Clock size={16} className="text-gray-500 flex-shrink-0" />
         <h3 className="font-semibold text-gray-900 text-sm">Activity Log</h3>
         {activityLog.length > 0 && (
           <span className="ml-auto text-xs text-gray-500">
@@ -60,32 +60,49 @@ export default function ActivityLog() {
       {/* Log Items */}
       <div className="max-h-[400px] overflow-y-auto">
         {activityLog.length === 0 ? (
-          <div className="px-4 py-8 text-center text-gray-400 text-sm">
+          <div className="px-3 sm:px-4 py-6 sm:py-8 text-center text-gray-400 text-xs sm:text-sm">
             No activity yet
           </div>
         ) : (
           <ul className="divide-y divide-gray-100">
             {activityLog.map((log) => {
               const config = actionConfig[log.action];
+              
+              // For moved action, show detailed movement details
+              const isMoved = log.action === 'moved';
+              
               return (
                 <li
                   key={log.id}
-                  className="px-4 py-3 hover:bg-gray-50 transition"
+                  className="px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-gray-50 transition"
                 >
                   <div className="flex items-start gap-2">
-                    <span className="mt-0.5 flex-shrink-0">{config.icon}</span>
+                    <span className="mt-0.5 flex-shrink-0 text-sm">{config.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">
+                      <p className="text-xs sm:text-sm text-gray-900">
                         <span className={`font-medium ${config.color}`}>
                           {config.label}
                         </span>{" "}
-                        <span className="font-medium">{log.taskTitle} </span>
+                        <span className="font-medium line-clamp-1">{log.taskTitle}</span>
                       </p>
-                      {log.details && (
-                        <p className="text-xs text-gray-500 mt-0.5">
+                      
+                      {/* Movement details with visual indicators */}
+                      {isMoved && log.fromColumn && log.toColumn ? (
+                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
+                          <span className="px-1.5 py-0.5 bg-gray-100 rounded text-gray-700 font-medium">
+                            {log.fromColumn}
+                          </span>
+                          <ArrowRight size={12} className="text-gray-400 flex-shrink-0" />
+                          <span className="px-1.5 py-0.5 bg-purple-100 rounded text-purple-700 font-medium">
+                            {log.toColumn}
+                          </span>
+                        </div>
+                      ) : log.details ? (
+                        <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
                           {log.details}
                         </p>
-                      )}
+                      ) : null}
+                      
                       <p className="text-xs text-gray-400 mt-0.5">
                         {formatTime(log.timestamp)}
                       </p>

@@ -28,7 +28,8 @@ export default function SortableTaskCard({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.4 : 1,
+    filter: isDragging ? 'blur(1px) grayscale(20%)' : 'blur(0px) grayscale(0%)',
   };
 
   return (
@@ -37,7 +38,7 @@ export default function SortableTaskCard({
       style={style}
       {...attributes}
       {...listeners}
-      className="touch-none"
+      className="touch-none select-none"
     >
       <TaskCard task={task} onEdit={onEdit} onDelete={onDelete} />
     </div>

@@ -33,41 +33,43 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing ${
+      className={`bg-white rounded-lg shadow-sm border p-3 sm:p-4 hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing ${
         isOverdue ? "border-red-300 bg-red-50" : "border-gray-200"
       }`}
     >
       {/* Title + Buttons */}
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="font-semibold text-gray-900 flex-1 text-sm leading-snug">
+      <div className="flex justify-between items-start gap-2 mb-2">
+        <h3 className="font-semibold text-gray-900 flex-1 text-sm sm:text-base leading-snug">
           {task.title}
         </h3>
         <div
-          className="flex gap-1 ml-2 flex-shrink-0"
+          className="flex gap-1.5 sm:gap-2 flex-shrink-0"
           style={{ pointerEvents: "auto" }}
         >
           <button
             onClick={handleEdit}
             onPointerDown={(e) => e.stopPropagation()}
-            className="p-1 hover:bg-gray-100 rounded text-gray-500 hover:text-blue-600 transition"
+            className="p-1.5 sm:p-2 hover:bg-gray-100 rounded text-gray-500 hover:text-blue-600 transition touch-target"
             title="Edit task"
+            aria-label="Edit task"
           >
-            <Edit size={15} />
+            <Edit size={16} />
           </button>
           <button
             onClick={handleDelete}
             onPointerDown={(e) => e.stopPropagation()}
-            className="p-1 hover:bg-gray-100 rounded text-gray-500 hover:text-red-600 transition"
+            className="p-1.5 sm:p-2 hover:bg-gray-100 rounded text-gray-500 hover:text-red-600 transition touch-target"
             title="Delete task"
+            aria-label="Delete task"
           >
-            <Trash2 size={15} />
+            <Trash2 size={16} />
           </button>
         </div>
       </div>
 
       {/* Description */}
       {task.description && (
-        <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+        <p className="text-xs sm:text-sm text-gray-600 mb-2 line-clamp-2">
           {task.description}
         </p>
       )}
@@ -78,7 +80,7 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       </p>
 
       {/* Priority, Due Date, Tags */}
-      <div className="flex flex-wrap gap-2 items-center text-xs">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center text-xs sm:text-sm">
         {task.priority && (
           <span
             className={`px-2 py-0.5 rounded-full font-medium capitalize ${priorityColors[task.priority]}`}
@@ -99,12 +101,12 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
         )}
 
         {task.tags && task.tags.length > 0 && (
-          <div className="flex items-center gap-1 flex-wrap w-full mt-1">
-            <Tag size={13} className="text-gray-400" />
+          <div className="flex items-center gap-0.5 sm:gap-1 flex-wrap w-full mt-1">
+            <Tag size={14} className="text-gray-400 flex-shrink-0" />
             {task.tags.map((tag, index) => (
               <span
                 key={index}
-                className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded"
+                className="bg-gray-100 text-gray-600 px-1.5 sm:px-2 py-0.5 rounded text-xs"
               >
                 {tag}
               </span>

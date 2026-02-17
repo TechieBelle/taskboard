@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
+import { toastManager } from "@/lib/toast";
 import BoardColumn from "@/components/board/BoardColumn";
 import BoardToolbar from "@/components/board/BoardToolbar";
 import ActivityLog from "@/components/board/ActivityLog";
@@ -33,6 +34,8 @@ export default function BoardPage() {
   const deleteTask = useStore((state) => state.deleteTask);
   const addTask = useStore((state) => state.addTask);
   const updateTask = useStore((state) => state.updateTask);
+  const searchQuery = useStore((state) => state.searchQuery);
+  const priorityFilter = useStore((state) => state.priorityFilter);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -61,13 +64,25 @@ export default function BoardPage() {
   }, [isAuthenticated, isInitialized, router]);
 
   const handleLogout = () => {
-    logout();
-    router.push("/login");
+    try {
+      logout();
+      toastManager.info('Logged out successfully');
+      router.push("/login");
+    } catch (error) {
+      console.error('Error during logout:', error);
+      toastManager.error('Error logging out. Please try again.');
+    }
   };
 
   const handleResetBoard = () => {
-    resetBoard();
-    setResetConfirmOpen(false);
+    try {
+      resetBoard();
+      toastManager.success('Board has been reset. All tasks cleared.');
+      setResetConfirmOpen(false);
+    } catch (error) {
+      console.error('Error resetting board:', error);
+      toastManager.error('Failed to reset board. Please try again.');
+    }
   };
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -85,14 +100,24 @@ export default function BoardPage() {
     }
     const taskId = active.id as string;
     const newColumn = over.id as Column;
-    moveTask(taskId, newColumn);
+    try {
+      moveTask(taskId, newColumn);
+    } catch (error) {
+      console.error('Error moving task:', error);
+      toastManager.error('Failed to move task. Please try again.');
+    }
     setActiveTask(null);
   };
 
   const handleDragCancel = () => setActiveTask(null);
 
   const handleCreateTask = (taskData: Omit<Task, "id" | "createdAt">) => {
-    addTask(taskData);
+    try {
+      addTask(taskData);
+    } catch (error) {
+      console.error('Error creating task:', error);
+      toastManager.error('Failed to create task. Please try again.');
+    }
   };
 
   const handleEditTask = (task: Task) => {
@@ -102,8 +127,13 @@ export default function BoardPage() {
 
   const handleUpdateTask = (taskData: Omit<Task, "id" | "createdAt">) => {
     if (editingTask) {
-      updateTask(editingTask.id, taskData);
-      setEditingTask(null);
+      try {
+        updateTask(editingTask.id, taskData);
+        setEditingTask(null);
+      } catch (error) {
+        console.error('Error updating task:', error);
+        toastManager.error('Failed to update task. Please try again.');
+      }
     }
   };
 
@@ -118,8 +148,14 @@ export default function BoardPage() {
 
   const confirmDelete = () => {
     if (taskToDelete) {
-      deleteTask(taskToDelete.id);
-      setTaskToDelete(null);
+      try {
+        deleteTask(taskToDelete.id);
+        toastManager.success(`Task "${taskToDelete.title}" deleted successfully`);
+        setTaskToDelete(null);
+      } catch (error) {
+        console.error('Error deleting task:', error);
+        toastManager.error('Failed to delete task. Please try again.');
+      }
     }
   };
 
@@ -150,22 +186,22 @@ export default function BoardPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
       <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex justify-between items-center gap-2 sm:gap-4">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="bg-black w-9 h-9 flex items-center justify-center">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="bg-black w-8 sm:w-9 h-8 sm:h-9 flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold tracking-wider">
                 H
               </span>
             </div>
-            <h1 className="text-xl font-bold text-gray-900">Task Board</h1>
+            <h1 className="text-base sm:text-xl font-bold text-gray-900 truncate">Task Board</h1>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 overflow-x-auto">
             <button
               onClick={() => setShowActivityLog(!showActivityLog)}
-              className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg border transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition whitespace-nowrap ${
                 showActivityLog
                   ? "bg-black text-white border-black"
                   : "text-gray-700 border-gray-300 hover:bg-gray-100"
@@ -177,7 +213,7 @@ export default function BoardPage() {
 
             <button
               onClick={() => setResetConfirmOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition whitespace-nowrap"
             >
               <RotateCcw size={16} />
               <span className="hidden sm:inline">Reset</span>
@@ -185,15 +221,16 @@ export default function BoardPage() {
 
             <button
               onClick={() => setIsFormOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 bg-black text-white text-sm rounded-lg hover:bg-gray-800 transition"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-black text-white text-xs sm:text-sm rounded-lg hover:bg-gray-800 transition whitespace-nowrap"
             >
               <Plus size={16} />
-              <span>New Task</span>
+              <span className="hidden xs:inline">New Task</span>
+              <span className="inline xs:hidden">+</span>
             </button>
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition whitespace-nowrap"
             >
               <LogOut size={16} />
               <span className="hidden sm:inline">Logout</span>
@@ -203,63 +240,85 @@ export default function BoardPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
         {/* Search & Filter Toolbar */}
         <BoardToolbar />
 
         {/* Board + Activity Log */}
         <div
-          className={`flex gap-6 ${showActivityLog ? "lg:flex-row flex-col" : ""}`}
+          className={`flex flex-col lg:flex-row gap-4 lg:gap-6 ${
+            showActivityLog ? "lg:flex-row" : ""
+          }`}
         >
           {/* Board Columns */}
           <div className="flex-1 min-w-0">
-            <DndContext
-              sensors={sensors}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              onDragCancel={handleDragCancel}
-            >
-              <div className="flex gap-4 overflow-x-auto pb-4">
-                <BoardColumn
-                  column="todo"
-                  title="Todo"
-                  tasks={todoTasks}
-                  onEditTask={handleEditTask}
-                  onDeleteTask={handleDeleteTask}
-                />
-                <BoardColumn
-                  column="doing"
-                  title="Doing"
-                  tasks={doingTasks}
-                  onEditTask={handleEditTask}
-                  onDeleteTask={handleDeleteTask}
-                />
-                <BoardColumn
-                  column="done"
-                  title="Done"
-                  tasks={doneTasks}
-                  onEditTask={handleEditTask}
-                  onDeleteTask={handleDeleteTask}
-                />
-              </div>
-
-              <DragOverlay>
-                {activeTask ? (
-                  <div className="cursor-grabbing rotate-2 shadow-2xl">
-                    <TaskCard
-                      task={activeTask}
-                      onEdit={() => {}}
-                      onDelete={() => {}}
-                    />
+            {allTasks.length === 0 ? (
+              <div className="flex items-center justify-center min-h-[450px] bg-white rounded-lg border-2 border-dashed border-gray-300">
+                <div className="text-center">
+                  <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Plus size={32} className="text-gray-400" />
                   </div>
-                ) : null}
-              </DragOverlay>
-            </DndContext>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No tasks yet</h3>
+                  <p className="text-gray-600 text-sm mb-6 max-w-xs">
+                    Create your first task to get started
+                  </p>
+                  <button
+                    onClick={() => setIsFormOpen(true)}
+                    className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium"
+                  >
+                    Create Task
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <DndContext
+                sensors={sensors}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                onDragCancel={handleDragCancel}
+              >
+                <div className="flex flex-row lg:flex-row gap-3 sm:gap-4 pb-3 sm:pb-4 overflow-x-auto lg:overflow-x-visible">
+                  <BoardColumn
+                    column="todo"
+                    title="Todo"
+                    tasks={todoTasks}
+                    onEditTask={handleEditTask}
+                    onDeleteTask={handleDeleteTask}
+                  />
+                  <BoardColumn
+                    column="doing"
+                    title="Doing"
+                    tasks={doingTasks}
+                    onEditTask={handleEditTask}
+                    onDeleteTask={handleDeleteTask}
+                  />
+                  <BoardColumn
+                    column="done"
+                    title="Done"
+                    tasks={doneTasks}
+                    onEditTask={handleEditTask}
+                    onDeleteTask={handleDeleteTask}
+                  />
+                </div>
+
+                <DragOverlay dropAnimation={null}>
+                  {activeTask ? (
+                    <div className="cursor-grabbing rotate-2 shadow-2xl scale-105 origin-center ring-2 ring-purple-400 ring-opacity-50 rounded-lg">
+                      <TaskCard
+                        task={activeTask}
+                        onEdit={() => {}}
+                        onDelete={() => {}}
+                      />
+                    </div>
+                  ) : null}
+                </DragOverlay>
+              </DndContext>
+            )}
           </div>
 
           {/* Activity Log Panel */}
           {showActivityLog && (
-            <div className="w-full lg:w-80 flex-shrink-0">
+            <div className="hidden lg:block w-full lg:w-80 flex-shrink-0">
               <ActivityLog />
             </div>
           )}

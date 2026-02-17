@@ -15,3 +15,10 @@ body {
 body {
   margin: 0;
 }
+
+/* Mobile touch target improvements */
+@layer components {
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+}

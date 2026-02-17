@@ -17,5 +17,7 @@ export interface ActivityLog {
   action: 'created' | 'edited' | 'moved' | 'deleted';
   taskTitle: string;
   timestamp: string;
+  fromColumn?: string;
+  toColumn?: string;
   details?: string;
 }

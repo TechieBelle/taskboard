@@ -2,6 +2,15 @@ import { create } from 'zustand';
 import { Task, ActivityLog, Column, Priority } from '@/types';
 import { storage } from './storage';
 
+// Column display name mapping
+const COLUMN_NAMES: Record<Column, string> = {
+  todo: 'Todo',
+  doing: 'In Progress',
+  done: 'Done',
+};
+
+const getColumnDisplayName = (column: Column): string => COLUMN_NAMES[column];
+
 interface TaskStore {
   // State
   tasks: Task[];
@@ -168,7 +177,9 @@ export const useStore = create<TaskStore>((set, get) => ({
       action: 'moved',
       taskTitle: task?.title || '',
       timestamp: new Date().toISOString(),
-      details: `from ${oldColumn} to ${newColumn}`
+      fromColumn: oldColumn ? getColumnDisplayName(oldColumn) : undefined,
+      toColumn: getColumnDisplayName(newColumn),
+      details: oldColumn ? `from ${getColumnDisplayName(oldColumn)} to ${getColumnDisplayName(newColumn)}` : undefined,
     };
 
     const activityLog = [activity, ...get().activityLog].slice(0, 50);

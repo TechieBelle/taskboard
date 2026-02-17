@@ -36,38 +36,39 @@ export default function ConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         {/* Header */}
-        <div className="flex justify-between items-center p-6 border-b">
-          <h2 className="text-xl font-bold text-gray-900">{title}</h2>
+        <div className="flex justify-between items-center p-4 sm:p-6 border-b">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">{title}</h2>
           <button
             onClick={onClose}
             type="button"
-            className="text-gray-400 hover:text-gray-600 transition"
+            className="text-gray-400 hover:text-gray-600 transition p-1 hover:bg-gray-100 rounded"
+            aria-label="Close modal"
           >
             <X size={24} />
           </button>
         </div>
 
         {/* Message */}
-        <div className="p-6">
-          <p className="text-gray-700">{message}</p>
+        <div className="p-4 sm:p-6">
+          <p className="text-sm sm:text-base text-gray-700 leading-relaxed line-clamp-5">{message}</p>
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-3 p-6 border-t bg-gray-50 rounded-b-lg">
+        <div className="flex flex-col xs:flex-row gap-2 xs:gap-3 p-4 sm:p-6 border-t bg-gray-50 rounded-b-lg">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
+            className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-sm border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
           >
             {cancelText}
           </button>
           <button
             type="button"
             onClick={handleConfirm}
-            className={`flex-1 px-4 py-2 text-white rounded-lg transition focus:ring-4 ${buttonColors[variant]}`}
+            className={`flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-sm text-white rounded-lg transition focus:ring-4 ${buttonColors[variant]}`}
           >
             {confirmText}
           </button>

@@ -4,7 +4,7 @@ import { storage } from './storage';
 
 const COLUMN_NAMES: Record<Column, string> = {
   todo: 'Todo',
-  doing: 'In Progress',
+  doing: 'Doing',
   done: 'Done',
 };
 

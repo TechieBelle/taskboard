@@ -38,8 +38,7 @@ A fully-featured task management board built with Next.js, React, and Tailwind C
 ### Installation
 
 ```bash
-# Clone or navigate to project
-cd c:/Users/DELL/Desktop/taskboard
+ Clone or navigate to project
 
 # Install dependencies
 pnpm install
